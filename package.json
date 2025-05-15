@@ -12,7 +12,11 @@
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
+    "@leafer-in/arrow": "^1.6.2",
+    "@leafer-in/view": "^1.6.2",
+    "@leafer-in/viewport": "^1.6.2",
     "es-toolkit": "^1.37.2",
+    "leafer-ui": "^1.6.2",
     "pinia": "^3.0.2",
     "vue": "^3.5.13",
     "vue-router": "^4.5.1"
@@ -26,6 +30,7 @@
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.7.0",
     "jsdom": "^26.1.0",
+    "naive-ui": "^2.41.0",
     "npm-run-all2": "^8.0.1",
     "sass": "^1.88.0",
     "typescript": "~5.8.3",

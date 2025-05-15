@@ -1,8 +1,8 @@
 <script setup lang="ts"></script>
 
 <template>
-  <main>
-    Vue3
+  <main class="h-screen">
+    <FlowEditor></FlowEditor>
   </main>
 </template>
 

@@ -8,6 +8,9 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    FlowEditor: typeof import('./src/components/FlowEditor/FlowEditor.vue')['default']
+    NButton: typeof import('naive-ui')['NButton']
+    NFlex: typeof import('naive-ui')['NFlex']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
