@@ -1,16 +1,13 @@
 <script setup lang="ts">
-import { App, DragEvent, PointerEvent, Rect } from 'leafer-ui'
+import { App } from 'leafer-ui'
 import '@leafer-in/viewport'
 import '@leafer-in/view'
-import { TextNodeTheme } from './config'
-import type { TextNode } from './types'
-import { ConnectionManager } from './connect'
+import { EditorManager } from './manager'
 
 const refCtn = useTemplateRef('refCtn')
 
 let app: App
-let activeNode: TextNode | null
-const connectionManager = new ConnectionManager()
+let manager: EditorManager
 onMounted(() => {
   app = new App({
     view: refCtn.value!,
@@ -20,73 +17,19 @@ onMounted(() => {
     move: { drag: 'auto' },
     cursor: false,
   })
-  app.on(PointerEvent.CLICK, (e) => {
-    const target = e.target
-    const oldNode = activeNode
-    if (target instanceof Rect) {
-      activeNode = target
-    } else {
-      activeNode = null
-    }
-    handleActiveNodeChange(oldNode, activeNode, e)
-  })
-
-  app.on(DragEvent.DRAG, (e) => {
-    const target = e.target
-    if (target instanceof Rect) {
-      connectionManager.refresh(target)
-    }
-  })
+  manager = new EditorManager(app)
 })
 
 onUnmounted(() => {
-  app.destroy()
+  manager.destroy()
 })
 
-const handleActiveNodeChange = (
-  oldNode: TextNode | null,
-  node: TextNode | null,
-  e: MouseEvent
-) => {
-  if (oldNode) {
-    oldNode.stroke = TextNodeTheme.STROKE
-  }
-  if (node) {
-    node.stroke = TextNodeTheme.FOCUS_STROKE
-  }
-  if (oldNode && node && e.ctrlKey) {
-    connectNodes(oldNode, node)
-  }
-}
-
-const connectNodes = (node1: TextNode, node2: TextNode) => {
-  const connection = connectionManager.connect(
-    node1 as Required<TextNode>,
-    node2 as Required<TextNode>
-  )!
-  app.tree.add(connection.line)
-}
-
 const handleAddNode = () => {
-  const rect = new Rect({
-    x: 100,
-    y: 100,
-    width: 200,
-    height: 100,
-    fill: TextNodeTheme.FILL,
-    stroke: TextNodeTheme.STROKE,
-    strokeWidth: 3,
-    cornerRadius: 5,
-    draggable: true,
-  })
-  app.tree.add(rect)
+  manager.addNode()
 }
 
 const handleResetView = () => {
-  app.tree.scale = { x: 1, y: 1 }
-  app.tree.x = 0
-  app.tree.y = 0
-  app.tree.updateLayout()
+  manager.resetView()
 }
 </script>
 
