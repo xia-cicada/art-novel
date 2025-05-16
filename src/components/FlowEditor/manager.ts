@@ -56,7 +56,6 @@ export class Connection {
 
 export class EditorManager {
   app: App
-  nodes: EditorNode[] = []
   connections: Map<string, Connection> = new Map()
 
   activeNode: EditorNode | null = null
@@ -79,7 +78,6 @@ export class EditorManager {
       cornerRadius: EditorTheme.RADIUS,
       draggable: true,
     })
-    this.nodes.push(node)
     this.app.tree.add(node)
   }
 
@@ -134,7 +132,6 @@ export class EditorManager {
   }
 
   destroy() {
-    this.nodes = []
     this.connections.clear()
     this.app.destroy()
   }
@@ -214,4 +211,12 @@ export class EditorManager {
       }
     })
   }
+
+  toJSON() {
+    return {
+      leaferData: this.app.toJSON(),
+    }
+  }
+
+  fromJSON() {}
 }

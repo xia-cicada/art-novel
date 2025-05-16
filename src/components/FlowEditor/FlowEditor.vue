@@ -31,6 +31,11 @@ const handleAddNode = () => {
 const handleResetView = () => {
   manager.resetView()
 }
+
+const handleExport = () => {
+  const json = manager.toJSON()
+  console.log(json)
+}
 </script>
 
 <template>
@@ -44,6 +49,9 @@ const handleResetView = () => {
       </n-button>
       <n-button size="small" type="primary" @click="handleResetView">
         重置视图
+      </n-button>
+      <n-button size="small" type="primary" @click="handleExport">
+        导出
       </n-button>
     </n-flex>
     <div
